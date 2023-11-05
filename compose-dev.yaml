@@ -1,0 +1,27 @@
+services:
+  app:
+    entrypoint:
+      - sleep
+      - infinity
+    build:
+      context: docker
+    volumes:
+      # mount the SSH auth socket
+      - type: bind
+        source: /run/host-services/ssh-auth.sock
+        target: /ssh-auth.sock
+      # mount the host ssh folder so we can use our ssh credentials from within the container
+      # is read-only because we don't want to edit the host
+      - type: bind
+        source: ~/.ssh
+        target: /home/ubuntu/.ssh
+        read_only: true
+      # mount the .gitconfig file so we can use our git credentials from within the container
+      # is read-only because we don't want to edit the host
+      - type: bind
+        source: ~/.gitconfig
+        target: /home/ubuntu/.gitconfig
+        read_only: true
+    environment:
+      # set the ssh socket path so we can use the host ssh credentials from within the container
+      - SSH_AUTH_SOCK=/ssh-auth.sock
