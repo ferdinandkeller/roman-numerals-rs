@@ -1,8 +1,8 @@
 # Roman Numerals
 
-Library that can convert our [Base 10 Arabic Numeral System](https://en.wikipedia.org/wiki/Hindu–Arabic_numeral_system) to the [Roman Numeral System](https://en.wikipedia.org/wiki/Roman_numerals), and vice versa.
+This library can help you convert numbers in our [Base 10 Arabic Numeral System](https://en.wikipedia.org/wiki/Hindu–Arabic_numeral_system) to [Roman Numeral System](https://en.wikipedia.org/wiki/Roman_numerals), and vice versa.
 
-It is compatible with all unsigned integer types, from `u8` to `u128`.
+It is compatible with all unsigned integer types, from `u8` to `u128`, including `usize`.
 
 ## Installation
 
@@ -28,7 +28,14 @@ assert_eq!(3u32.to_roman(), "III");
 
 ### Parse Roman
 
-todo
+```rust
+use roman_numerals::FromRoman;
+
+assert_eq!(u32::from_roman("ABC"), None);
+assert_eq!(u32::from_roman("I"), Some(1));
+assert_eq!(u32::from_roman("II"), Some(2));
+assert_eq!(u32::from_roman("III"), Some(3));
+```
 
 ## Contributing
 
