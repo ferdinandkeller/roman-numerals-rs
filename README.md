@@ -19,7 +19,7 @@ The library is available on [crates.io](https://crates.io/crates/roman_numerals)
 ### Convert to Roman
 
 ```rust
-use roman_numerals::to_roman;
+use roman_numerals::ToRoman;
 
 assert_eq!(1u32.to_roman(), "I");
 assert_eq!(2u32.to_roman(), "II");
