@@ -2,6 +2,8 @@
 
 This library can help you convert numbers in our [Base 10 Arabic Numeral System](https://en.wikipedia.org/wiki/Hindu–Arabic_numeral_system) to [Roman Numeral System](https://en.wikipedia.org/wiki/Roman_numerals), and vice versa.
 
+Using this library you can parse arbitrarily large numbers, including in the thousands, millions, billions, and above, as long as they fit into the `u128` type or smaller.
+
 It is compatible with all unsigned integer types, from `u8` to `u128`, including `usize`.
 
 ## Installation
@@ -24,6 +26,7 @@ use roman_numerals::ToRoman;
 assert_eq!(1u32.to_roman(), "I");
 assert_eq!(2u32.to_roman(), "II");
 assert_eq!(3u32.to_roman(), "III");
+assert_eq!(1_000_000u64.to_roman(), "M̄");
 ```
 
 ### Parse Roman
