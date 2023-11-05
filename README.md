@@ -4,6 +4,16 @@ Library that can convert our [Base 10 Arabic Numeral System](https://en.wikipedi
 
 It is compatible with all unsigned integer types, from `u8` to `u128`.
 
+## Installation
+
+Add `roman_numerals` to your `Cargo.toml`, or run the following command:
+
+```bash
+cargo add roman-numerals
+```
+
+The library is available on [crates.io](https://crates.io/crates/roman_numerals).
+
 ## Usage
 
 ### Convert to Roman
