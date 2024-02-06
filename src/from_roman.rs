@@ -1,13 +1,14 @@
+/// Converts a roman numeral string to a number.
+///
+/// # Examples
+///
+/// ```
+/// use roman_numerals::FromRoman;
+/// assert_eq!(u64::from_roman("ABC"), None);
+/// assert_eq!(u64::from_roman("nulla"), Some(0));
+/// assert_eq!(u64::from_roman("I"), Some(1));
+/// ```
 pub trait FromRoman {
-    /// Converts a roman numeral string to a number.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use roman_numerals::FromRoman;
-    /// assert_eq!(u64::from_roman("ABC"), None);
-    /// assert_eq!(u64::from_roman("I"), Some(1));
-    /// ```
     fn from_roman(number: &str) -> Option<Self>
     where
         Self: Sized;
@@ -28,7 +29,7 @@ macro_rules! impl_from_roman {
     ($t: tt) => {
         impl FromRoman for $t {
             fn from_roman(number: &str) -> Option<$t> {
-                // convert to lower_case
+                // convert to upper case
                 let number = number.to_uppercase();
 
                 // test if zero
@@ -48,6 +49,7 @@ macro_rules! impl_from_roman {
                 let mut accumulator: $t = 0;
 
                 // convert the string to a peekable iterator
+                // (reversed because we want to start from the units place)
                 let mut digits = number
                     .chars()
                     .map(|c| match c {
@@ -76,15 +78,12 @@ macro_rules! impl_from_roman {
                         RomanDigit::M => 1_000,
                     };
 
-                    // get the next digit
-                    let next_digit = digits.peek();
-
-                    // if the next digit is smaller than the current digit
-                    if next_digit.is_some() {
-                        let next = *next_digit.unwrap();
-                        if next < digit {
+                    // if there is a next digit ...
+                    if let Some(&next_digit) = digits.peek() {
+                        // ... which is smaller than the current digit
+                        if next_digit < digit {
                             // subtract the next digit from the accumulator
-                            accumulator -= match next {
+                            accumulator -= match next_digit {
                                 RomanDigit::I => 1,
                                 RomanDigit::V => 5,
                                 RomanDigit::X => 10,
@@ -120,10 +119,7 @@ impl_from_roman_for_ints![u16, u32, u64, u128, usize];
 /// Implement FromRoman for u8.
 /// This had to be done separately because u8 cannot store the values of 500 and 1000.
 impl FromRoman for u8 {
-    fn from_roman(number: &str) -> Option<Self>
-    where
-        Self: Sized,
-    {
+    fn from_roman(number: &str) -> Option<Self> {
         u16::from_roman(number).map(|n| n.try_into().ok()).flatten()
     }
 }
