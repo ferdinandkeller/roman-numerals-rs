@@ -5,12 +5,7 @@ fn invalids() {
     assert_eq!(u64::from_roman("a"), None);
     assert_eq!(u64::from_roman("B"), None);
     assert_eq!(u64::from_roman("abc"), None);
-
     assert_eq!(u32::from_roman("ABC"), None);
-    assert_eq!(u32::from_roman("I"), Some(1));
-    assert_eq!(u32::from_roman("I"), Some(1));
-    assert_eq!(u32::from_roman("II"), Some(2));
-    assert_eq!(u32::from_roman("III"), Some(3));
 }
 
 #[test]
@@ -39,6 +34,7 @@ fn basics() {
 
 #[test]
 fn zero_to_one_hundred() {
+    assert_eq!(u64::from_roman("nulla"), Some(0));
     assert_eq!(u64::from_roman("I"), Some(1));
     assert_eq!(u64::from_roman("II"), Some(2));
     assert_eq!(u64::from_roman("III"), Some(3));
@@ -139,4 +135,13 @@ fn zero_to_one_hundred() {
     assert_eq!(u64::from_roman("XCVIII"), Some(98));
     assert_eq!(u64::from_roman("XCIX"), Some(99));
     assert_eq!(u64::from_roman("C"), Some(100));
+}
+
+#[test]
+fn do_not_fit() {
+    assert_eq!(u8::from_roman("D"), None);
+    assert_eq!(u8::from_roman("M"), None);
+    assert_eq!(u16::from_roman("L̄X̄X̄"), None);
+    assert_eq!(u16::from_roman("X̄̄"), None);
+    assert_eq!(u64::from_roman("X̄̄"), None);
 }
